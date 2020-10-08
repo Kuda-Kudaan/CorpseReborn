@@ -7,10 +7,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -49,7 +46,7 @@ public class Util {
 	}
 
 	public static void cinfo(String text){
-		text = text.replaceAll("&", "§");
+		text = text.replaceAll("&", String.valueOf(ChatColor.COLOR_CHAR));
 		Bukkit.getConsoleSender().sendMessage(prefix + text);
 	}
 

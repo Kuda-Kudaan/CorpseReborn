@@ -14,54 +14,54 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_9_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_9_R1.inventory.CraftItemStack;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.golde.bukkit.corpsereborn.ConfigData;
 import org.golde.bukkit.corpsereborn.Main;
 import org.golde.bukkit.corpsereborn.Util;
 import org.golde.bukkit.corpsereborn.nms.Corpses;
 import org.golde.bukkit.corpsereborn.nms.NmsBase;
-import org.golde.bukkit.corpsereborn.nms.nmsclasses.packetlisteners.PcktIn_v1_11_R1;
+import org.golde.bukkit.corpsereborn.nms.nmsclasses.packetlisteners.PcktIn_v1_9_R1;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.PropertyMap;
 
-import net.minecraft.server.v1_11_R1.BlockPosition;
-import net.minecraft.server.v1_11_R1.ChatMessage;
-import net.minecraft.server.v1_11_R1.DataWatcher;
-import net.minecraft.server.v1_11_R1.DataWatcherObject;
-import net.minecraft.server.v1_11_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_11_R1.Entity;
-import net.minecraft.server.v1_11_R1.EntityHuman;
-import net.minecraft.server.v1_11_R1.EnumGamemode;
-import net.minecraft.server.v1_11_R1.EnumItemSlot;
-import net.minecraft.server.v1_11_R1.IChatBaseComponent;
-import net.minecraft.server.v1_11_R1.ItemStack;
-import net.minecraft.server.v1_11_R1.PacketPlayOutBed;
-import net.minecraft.server.v1_11_R1.PacketPlayOutEntity.PacketPlayOutRelEntityMove;
-import net.minecraft.server.v1_11_R1.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_11_R1.PacketPlayOutEntityEquipment;
-import net.minecraft.server.v1_11_R1.PacketPlayOutNamedEntitySpawn;
-import net.minecraft.server.v1_11_R1.PacketPlayOutPlayerInfo;
-import net.minecraft.server.v1_11_R1.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
-import net.minecraft.server.v1_11_R1.PacketPlayOutPlayerInfo.PlayerInfoData;
-import net.minecraft.server.v1_11_R1.PlayerConnection;
+import net.minecraft.server.v1_9_R1.BlockPosition;
+import net.minecraft.server.v1_9_R1.ChatMessage;
+import net.minecraft.server.v1_9_R1.DataWatcher;
+import net.minecraft.server.v1_9_R1.DataWatcherObject;
+import net.minecraft.server.v1_9_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_9_R1.Entity;
+import net.minecraft.server.v1_9_R1.EntityHuman;
+import net.minecraft.server.v1_9_R1.EnumItemSlot;
+import net.minecraft.server.v1_9_R1.IChatBaseComponent;
+import net.minecraft.server.v1_9_R1.ItemStack;
+import net.minecraft.server.v1_9_R1.NBTTagCompound;
+import net.minecraft.server.v1_9_R1.PacketPlayOutBed;
+import net.minecraft.server.v1_9_R1.PacketPlayOutEntity.PacketPlayOutRelEntityMove;
+import net.minecraft.server.v1_9_R1.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_9_R1.PacketPlayOutEntityEquipment;
+import net.minecraft.server.v1_9_R1.PacketPlayOutNamedEntitySpawn;
+import net.minecraft.server.v1_9_R1.PacketPlayOutPlayerInfo;
+import net.minecraft.server.v1_9_R1.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
+import net.minecraft.server.v1_9_R1.PacketPlayOutPlayerInfo.PlayerInfoData;
+import net.minecraft.server.v1_9_R1.PlayerConnection;
+import net.minecraft.server.v1_9_R1.WorldSettings.EnumGamemode;
 
-public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
+public class NMSCorpses_v1_9_R1 extends NmsBase implements Corpses {
 
 	private List<CorpseData> corpses;
 
-	public NMSCorpses_v1_11_R1() {
+	public NMSCorpses_v1_9_R1() {
 		corpses = new ArrayList<CorpseData>();
 		Bukkit.getServer().getScheduler()
 		.scheduleSyncRepeatingTask(Main.getPlugin(), new Runnable() {
@@ -93,7 +93,7 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 			}
 
 			@Override
-			public boolean z() {
+			public boolean l_() {
 				return false;
 			}
 		};
@@ -108,25 +108,34 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 		return newProf;
 	}
 
+	public Location getNonClippableBlockUnderPlayer(Location loc, int addToYPos) {
+		if (loc.getBlockY() < 0) {
+			return null;
+		}
+		for (int y = loc.getBlockY(); y >= 0; y--) {
+			Material m = loc.getWorld()
+					.getBlockAt(loc.getBlockX(), y, loc.getBlockZ()).getType();
+			if (m.isSolid()) {
+				return new Location(loc.getWorld(), loc.getX(), y + addToYPos,
+						loc.getZ());
+			}
+		}
+		return null;
+	}
+
 	public CorpseData spawnCorpse(Player p, String overrideUsername, Location loc, Inventory inv, int facing) {
 		int entityId = getNextEntityId();
 		GameProfile prof = cloneProfileWithRandomUUID(
 				((CraftPlayer) p).getProfile(),
 				ConfigData.showTags() ? ConfigData.getUsername(p.getName(), overrideUsername) : "");
-
 		DataWatcher dw = clonePlayerDatawatcher(p, entityId);
-		//dw.watch(10, ((CraftPlayer) p).getHandle().getDataWatcher().getByte(10));
-		DataWatcherObject<Integer> obj = new DataWatcherObject<Integer>(10, DataWatcherRegistry.b);
-		//dw.register(obj, (byte)10);
-		dw.set(obj, (int)0);
-		DataWatcherObject<Byte> obj2 = new DataWatcherObject<Byte>(13, DataWatcherRegistry.a);
-		dw.set(obj2, (byte)0x7F);
 
+		DataWatcherObject<Byte> obj2 = new DataWatcherObject<Byte>(12, DataWatcherRegistry.a);
+		dw.set(obj2, (byte)0x7F);
 		Location locUnder = getNonClippableBlockUnderPlayer(loc, 1);
 		Location used = locUnder != null ? locUnder : loc;
 		used.setYaw(loc.getYaw());
 		used.setPitch(loc.getPitch());
-		
 		NMSCorpseData data = new NMSCorpseData(prof, used, dw, entityId,
 				ConfigData.getCorpseTime() * 20, inv, facing);
 
@@ -134,7 +143,7 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 			data.killerName = p.getKiller().getName();
 			data.killerUUID = p.getKiller().getUniqueId();
 		}
-
+		
 		data.corpseName = p.getName();
 		corpses.add(data);
 		spawnSlimeForCorpse(data);
@@ -143,36 +152,31 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 	
 	@Override
 	public CorpseData loadCorpse(String gpName, String gpJSON, Location loc, Inventory items, int facing) {
-
 		int entityId = getNextEntityId();
 		GameProfile gp = new GameProfile(UUID.randomUUID(), ConfigData.showTags() ? ConfigData.getUsername(gpName, null) : "");
-
+		
 		if (gpJSON != null) {
 			JsonElement element = new JsonParser().parse(gpJSON);
 			PropertyMap propertyMap = new PropertyMap.Serializer().deserialize(element,  null,  null);
 			gp.getProperties().putAll(propertyMap);
 		}
-		
+        
 		DataWatcher dw = clonePlayerDatawatcher(gp, loc.getWorld(), entityId);
-		DataWatcherObject<Integer> obj = new DataWatcherObject<Integer>(10, DataWatcherRegistry.b);
-		//dw.register(obj, (byte)10);
-		dw.set(obj, (int)0);
-		DataWatcherObject<Byte> obj2 = new DataWatcherObject<Byte>(13, DataWatcherRegistry.a);
+		DataWatcherObject<Byte> obj2 = new DataWatcherObject<Byte>(12, DataWatcherRegistry.a);
 		dw.set(obj2, (byte)0x7F);
-
-		Location locUnder = getNonClippableBlockUnderPlayer(loc, 1);
+        
+        Location locUnder = getNonClippableBlockUnderPlayer(loc, 1);
 		Location used = locUnder != null ? locUnder : loc;
 		used.setYaw(loc.getYaw());
 		used.setPitch(loc.getPitch());
 		
 		NMSCorpseData data = new NMSCorpseData(gp, used, dw, entityId,
 				ConfigData.getCorpseTime() * 20, items, facing);
-		
+
 		data.corpseName = gpName;
 		corpses.add(data);
 		spawnSlimeForCorpse(data);
-		
-		return data;
+        return data;
 	}
 	
 	public static DataWatcher clonePlayerDatawatcher(GameProfile gp, World world,
@@ -197,7 +201,7 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 			}
 
 			@Override
-			public boolean z() {
+			public boolean l_() {
 				return false;
 			}
 		};
@@ -246,10 +250,10 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 		private InventoryView iv;
 		private int slot;
 		private int rotation;
-		
+
 		private String killerName;
 		private UUID killerUUID;
-
+		
 		public NMSCorpseData(GameProfile prof, Location loc,
 				DataWatcher metadata, int entityId, int ticksLeft,
 				Inventory items, int rotation) {
@@ -273,7 +277,7 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 			return rotation;
 		}
 
-		public ItemStack convertBukkitToMc(org.bukkit.inventory.ItemStack stack){
+		public ItemStack convertBukkitToMc(org.bukkit.inventory.ItemStack stack){	
 			return CraftItemStack.asNMSCopy(stack);
 			/*if(stack == null){
 				return new ItemStack(Item.getById(0));	
@@ -283,7 +287,6 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 			if(stack.getEnchantments().size() >= 1) {
 				temp.addEnchantment(Enchantment.c(0), 1);//Dummy enchantment
 			}
-
 			return temp;*/
 		}
 
@@ -436,7 +439,7 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 			for (Player p : toSend) {
 				PlayerConnection conn = ((CraftPlayer) p).getHandle().playerConnection;
 				p.sendBlockChange(Util.bedLocation(loc),
-						Material.BED_BLOCK, (byte) rotation);
+						Material.valueOf("BED_BLOCK"), (byte) rotation);
 				conn.sendPacket(infoPacket);
 				conn.sendPacket(spawnPacket);
 				conn.sendPacket(bedPacket);
@@ -476,7 +479,7 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 			final PacketPlayOutEntityEquipment offhandInfo = getEquipmentPacket(EnumItemSlot.OFFHAND, convertBukkitToMc(items.getItem(7)));
 			PlayerConnection conn = ((CraftPlayer) p).getHandle().playerConnection;
 			p.sendBlockChange(Util.bedLocation(loc),
-					Material.BED_BLOCK, (byte) rotation);
+					Material.valueOf("BED_BLOCK"), (byte) rotation);
 			conn.sendPacket(infoPacket);
 			conn.sendPacket(spawnPacket);
 			conn.sendPacket(bedPacket);
@@ -528,7 +531,7 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 		public void destroyCorpseFromEveryone() {
 			PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(
 					entityId);
-			Block b = loc.clone().subtract(0, 2, 0).getBlock();
+			Block b = Util.bedLocation(loc).getBlock();
 			boolean removeBed = true;
 			for (CorpseData cd : getAllCorpses()) {
 				if (cd != this
@@ -626,21 +629,14 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 			JsonElement element = new PropertyMap.Serializer().serialize(pmap, null, null);
 			return element.toString();
 		}
-
-
-		
 	}
 
-	int tickNumber = 0;
-
 	public void tick() {
-		++tickNumber;
-
 		List<CorpseData> toRemoveCorpses = new ArrayList<CorpseData>();
-		for (final CorpseData data : corpses) {
+		for (CorpseData data : corpses) {
 			List<Player> worldPlayers = data.getOrigLocation().getWorld()
 					.getPlayers();
-			for (final Player p : worldPlayers) {
+			for (Player p : worldPlayers) {
 				if (data.isTickingPlayer(p)) {
 					int ticks = data.getPlayerTicksLeft(p);
 					if (ticks > 0) {
@@ -652,23 +648,14 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 				}
 				if (data.mapContainsPlayer(p)) {
 					if (isInViewDistance(p, data) && !data.canSee(p)) {
-						new BukkitRunnable() {
-							public void run() {
-								data.resendCorpseToPlayer(p);
-							}
-						}.runTaskLater(Main.getPlugin(), 2);
-
+						data.resendCorpseToPlayer(p);
 						data.setCanSee(p, true);
 					} else if (!isInViewDistance(p, data) && data.canSee(p)) {
 						data.destroyCorpseFromPlayer(p);
 						data.setCanSee(p, false);
 					}
 				} else if (isInViewDistance(p, data)) {
-					new BukkitRunnable() {
-						public void run() {
-							data.resendCorpseToPlayer(p);
-						}
-					}.runTaskLater(Main.getPlugin(), 2);
+					data.resendCorpseToPlayer(p);
 					data.setCanSee(p, true);
 				} else {
 					data.setCanSee(p, false);
@@ -708,16 +695,20 @@ public class NMSCorpses_v1_11_R1 extends NmsBase implements Corpses {
 	}
 
 	public void registerPacketListener(Player p) {
-		PcktIn_v1_11_R1.registerListener(p);
+		PcktIn_v1_9_R1.registerListener(p);
 	}
 
 	@Override
 	protected void addNbtTagsToSlime(LivingEntity slime) {
-		slime.setAI(false);
-		Entity nmsEntity = ((CraftEntity) slime).getHandle();
-		nmsEntity.setSilent(true);
-		nmsEntity.setInvulnerable(true);
-		nmsEntity.setNoGravity(true);
+		Entity entity = ((CraftEntity)slime).getHandle();
+		NBTTagCompound tag = new NBTTagCompound();
+
+		entity.c(tag);
+		tag.setInt("Silent", 1);
+		tag.setInt("Invulnerable", 1);
+		tag.setInt("NoAI", 1);
+		tag.setInt("NoGravity", 1);
+		entity.f(tag);
 	}
 
 }

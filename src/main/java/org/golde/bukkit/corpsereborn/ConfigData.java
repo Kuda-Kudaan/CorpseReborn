@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -39,7 +40,7 @@ public class ConfigData {
 	public static boolean shouldSaveCorpses(){return shouldSaveCorpses;}
 	public static boolean shouldRenderArmor() {return shouldRenderArmor;}
 	public static boolean shouldSendDataToEric(){return shouldSendDataToEric;}
-	public static String getInventoryName(Player p){return guiName.replaceAll("%corpse%", p.getName()).replaceAll("&", "§");}
+	public static String getInventoryName(Player p){return guiName.replaceAll("%corpse%", p.getName()).replaceAll("&", String.valueOf(ChatColor.COLOR_CHAR));}
 	
 	@Deprecated
 	public static String getUsername(Player p, String overrideUsername){
@@ -48,7 +49,7 @@ public class ConfigData {
 	
 	public static String getUsername(String pUsername, String overrideUsername){
 		if(overrideUsername == null){
-			overrideUsername = username.replaceAll("%corpse%", pUsername).replaceAll("&", "§");
+			overrideUsername = username.replaceAll("%corpse%", pUsername).replaceAll("&", String.valueOf(ChatColor.COLOR_CHAR));
 		}
 		
 		if(overrideUsername.length() > 16) {
@@ -60,7 +61,7 @@ public class ConfigData {
 		if(finishLootingMessage.equalsIgnoreCase("none")){
 			return null;
 		}
-		return finishLootingMessage.replaceAll("%corpse%", name).replaceAll("&", "§");
+		return finishLootingMessage.replaceAll("%corpse%", name).replaceAll("&", String.valueOf(ChatColor.COLOR_CHAR));
 	}
 
 	public static boolean shouldDespawnAfterLoot(){

@@ -473,7 +473,7 @@ public class NMSCorpses_v1_14_R1 extends NmsBase implements Corpses {
 				PlayerConnection conn = ((CraftPlayer) p).getHandle().playerConnection;
 				Location bedLocation = Util.bedLocation(loc);
 				p.sendBlockChange(bedLocation,
-						Material.BED_BLOCK, (byte) rotation);
+						Material.valueOf("RED_BED"), (byte) rotation);
 				conn.sendPacket(infoPacket);
 				conn.sendPacket(spawnPacket);
 				//conn.sendPacket(bedPacket);
@@ -519,7 +519,7 @@ public class NMSCorpses_v1_14_R1 extends NmsBase implements Corpses {
 			PlayerConnection conn = ((CraftPlayer) p).getHandle().playerConnection;
 			Location bedLocation = Util.bedLocation(loc);
 			p.sendBlockChange(bedLocation,
-					Material.BED_BLOCK, (byte) rotation);
+					Material.valueOf("RED_BED"), (byte) rotation);
 			conn.sendPacket(infoPacket);
 			conn.sendPacket(spawnPacket);
 
