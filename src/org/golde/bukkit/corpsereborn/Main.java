@@ -26,12 +26,10 @@ import org.golde.bukkit.corpsereborn.listeners.PlayerChangedWorld;
 import org.golde.bukkit.corpsereborn.listeners.PlayerDeath;
 import org.golde.bukkit.corpsereborn.listeners.PlayerJoin;
 import org.golde.bukkit.corpsereborn.listeners.PlayerRespawn;
-import org.golde.bukkit.corpsereborn.listeners.WorldguardListener;
 import org.golde.bukkit.corpsereborn.nms.Corpses;
 
 import com.google.common.reflect.ClassPath;
 import com.google.common.reflect.ClassPath.ClassInfo;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 public class Main extends JavaPlugin {
 
@@ -47,31 +45,11 @@ public class Main extends JavaPlugin {
 	public static ServerVersion serverVersion = ServerVersion.UNKNOWN;
 	public static ServerType serverType = ServerType.UNKNOWN;
 
-	public boolean isWorldGuardEnabled = false;
-	public WorldGuardPlugin worldGuard = null;
-
-	public WorldguardListener worldGuardListener;
-
 	public File corpseSaveFile;
 
 	@Override
 	public void onLoad() {
 		PluginManager pm = getServer().getPluginManager();
-		
-		//For this release, I am disabling WorldGuard until I can get support for it.
-		
-//		if(pm.getPlugin("WorldGuard") != null) {
-//			try {
-//				Util.info("Worldguard detected. Adding custom spawn flags");
-//				worldGuard = (WorldGuardPlugin)getServer().getPluginManager().getPlugin("WorldGuard");
-//				worldGuardListener = new WorldguardListener(worldGuard);
-//				isWorldGuardEnabled = true;
-//			}
-//			catch(Exception e) {
-//				Util.info("Only worldguard 6.2 or later can use flags! Disabling worldguard support!");
-//				isWorldGuardEnabled = false;
-//			}
-//		}
 	}
 
 	@Override
@@ -143,15 +121,6 @@ public class Main extends JavaPlugin {
 			getCommand("corpsereborn").setExecutor(new GenericCommands());
 			getCommand("resendcorpses").setExecutor(new ResendCorpses());
 			getCommand("togglecorpse").setExecutor(new ToggleCorpse());
-
-			if(isWorldGuardEnabled) {
-				try {
-					worldGuardListener.registerEvents(pm);
-				}catch(Exception e) {
-					Util.info("Only worldguard 6.2 or later can use flags! Disabling worldguard support!");
-					isWorldGuardEnabled = false;
-				}
-			}
 
 			// Removing stray cows after 2 ticks, and every minute.
 			new BukkitRunnable(){
