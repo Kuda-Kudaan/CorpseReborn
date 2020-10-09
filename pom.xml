@@ -6,6 +6,7 @@
 
     <groupId>org.golde.bukkit.corpsereborn</groupId>
     <artifactId>CorpseReborn</artifactId>
+    <packaging>pom</packaging>
     <version>2.15.0</version>
     <build>
         <plugins>
@@ -29,7 +30,6 @@
         </plugins>
     </build>
 
-
     <repositories>
         <!--Spigot Repo -->
         <repository>
@@ -40,119 +40,110 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.16.1-R0.1-SNAPSHOT</version>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-api</artifactId>
+            <version>latest</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.16.1.jar</systemPath>
+            <systemPath>C:/lib/BungeeCord.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc...............</groupId>
+            <groupId>1_16_R2</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.8-R0.1-SNAPSHOT</version>
+            <version>1.16.3</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.8.jar</systemPath>
+            <systemPath>C:/lib/1_16_R2.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc..............</groupId>
+            <groupId>1_8_R1</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.8.3-R0.1-SNAPSHOT</version>
+            <version>1.8</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.8.3.jar</systemPath>
+            <systemPath>C:/lib/1_8_R1.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc.............</groupId>
+            <groupId>1_8_R2</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.8.5-R0.1-SNAPSHOT</version>
+            <version>1.8.3</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.8.5.jar</systemPath>
+            <systemPath>C:/lib/1_8_R2.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc............</groupId>
+            <groupId>1_8_R3</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.8.6-R0.1-SNAPSHOT</version>
+            <version>1.8.8</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.8.6.jar</systemPath>
+            <systemPath>C:/lib/1_8_R3.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc...........</groupId>
+            <groupId>1_9_R1</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <version>1.9.2</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.8.8.jar</systemPath>
+            <systemPath>C:/lib/1_9_R1.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc..........</groupId>
+            <groupId>1_9_R2</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.9.2-R0.1-SNAPSHOT</version>
+            <version>1.9.4</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.9.2.jar</systemPath>
+            <systemPath>C:/lib/1_9_R2.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc.........</groupId>
+            <groupId>1_10_R1</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.9.4-R0.1-SNAPSHOT</version>
+            <version>1.10.2</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.9.4.jar</systemPath>
+            <systemPath>C:/lib/1_10_R1.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc........</groupId>
+            <groupId>1_11_R1</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.10.2-R0.1-SNAPSHOT</version>
+            <version>1.11.2</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.10.2.jar</systemPath>
+            <systemPath>C:/lib/1_11_R1.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc.......</groupId>
+            <groupId>1_12_R2</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.11.2-R0.1-SNAPSHOT</version>
+            <version>1.12.2</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.11.2.jar</systemPath>
+            <systemPath>C:/lib/1_12_R1.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc......</groupId>
+            <groupId>1_13_R1</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <version>1.13</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.12.2.jar</systemPath>
+            <systemPath>C:/lib/1_13_R1.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc.....</groupId>
+            <groupId>1_13_R2</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.13-R0.1-SNAPSHOT</version>
+            <version>1.13.2</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.13.jar</systemPath>
+            <systemPath>C:/lib/1_13_R2.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc....</groupId>
+            <groupId>1_14_R1</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.13.2-R0.1-SNAPSHOT</version>
+            <version>1.14.4</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.13.2.jar</systemPath>
+            <systemPath>C:/lib/1_14_R1.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc...</groupId>
+            <groupId>1_15_R1</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.14.4-R0.1-SNAPSHOT</version>
+            <version>1.15.2</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.14.4.jar</systemPath>
+            <systemPath>C:/lib/1_15_R1.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc..</groupId>
+            <groupId>1_16_R1</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.15.2-R0.1-SNAPSHOT</version>
+            <version>1.16</version>
             <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.15.1.jar</systemPath>
+            <systemPath>C:/lib/1_16_R1.jar</systemPath>
         </dependency>
-
-        <dependency>
-            <groupId>org.spigotmc.</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.16.3-R0.1-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>C:/Users/USER/IdeaProjects/KudaCore/lib/spigot-1.16.3.jar</systemPath>
-        </dependency>
-
     </dependencies>
 
 </project>
